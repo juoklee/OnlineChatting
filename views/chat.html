@@ -1,0 +1,199 @@
+<html>
+    <head>
+        <title>chat</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/9bc671aedc.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/public/css/chat.css"/> 
+    </head>
+
+    <body>
+        <div class="wrap">
+            <!-- top-navbar -->
+            <div class="main-navbar"> 
+                <div class="dots">
+                    <i class="fa fa-circle"></i>
+                    <i class="fa fa-circle"></i>
+                    <i class="fa fa-circle"></i>
+                </div>
+                <div class="title">
+                    <span> Chat </span>
+                </div>
+                <div class="expand">
+                    <i class="fa fa-expand"></i>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="left-container">
+                    <ul class="nickname_box" id="nickname_box">
+                        <li class="board"><a href="#"><i class="fa fa-list-alt"></i><span>Dashboard</span></a></li>
+                        <li class="item active"><a href="#"><i class="fa fa-users"></i><span>Team chat</span></a></li>
+                        <!-- <li class="item"><a href="#"><i class="fa fa-user"></i><span>nickname1</span></a></li> -->
+                        <div class="my-account">
+                            <div class="name">
+                                <i class="fa fa-circle-user"></i>
+                                <span id="name"></span>
+                                <i class="fa fa-angle-down"></i>
+                                <span class="availability">Available</span>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+                <!-- chat -->
+                <div class="chat-area">
+                    <div class="chat-title" id="chat-title"><span>Team chat</span><i class="fa fa-search"></i></div>
+                    <div id="chat-list" class="chat-list">
+                        <!-- chat message -->
+                        <ol class="chat" id="chat">
+                            <!-- <li class="other">
+                              <div class="msg">
+                                <div class="user">Marga</div>
+                                <p>Dude</p>
+                                <p>Want to go dinner?</p>
+                              </div>
+                            </li>
+                            <li class="my">
+                              <div class="msg">
+                                <p>Puff...</p>
+                                <p>I'm still doing the Góngora comment...dagdsgasdgasdgasdgasdgasdggasdgasgasdgasdgsdg</p>
+                                <p>Better other day</p>
+                              </div>
+                            </li>
+                            <p class="notification">David joined the group</p> -->
+                        </ol>
+                        
+                    </div>
+                    <!-- input -->
+                    <div class="input-area">
+                        <div class="input-wrapper">
+                            <textarea id="message" value=""></textarea>
+                            <!-- <input type="text" > -->
+                            <i class="fa fa-smile-o"></i>
+                            <i class="fa fa-paperclip"></i>
+                        </div>
+                        <input type="button" onclick="send();" value="submit" class="send-btn">
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+    
+        <script>
+            var nickname = prompt('닉네임을 입력하세요');   
+            var socket = io.connect(); 
+
+            if(!nickname) {
+                socket.emit('info', {nickname: 'Guest'});
+            } else {
+                socket.emit('info', {nickname: nickname}); 
+            }
+            document.getElementById("name").textContent = nickname;
+
+            /*  입장 alert */
+            socket.on("notice", function(data) {
+                let chat = document.getElementById("chat");
+                let p = document.createElement("p");
+                p.textContent = data;
+                p.className = "notification";
+                chat.appendChild(p);
+            })
+
+            /* 유저 list */
+            socket.on('list', function(list) {
+                let nick_list = document.getElementById("nickname_box");    
+                $(".nickname_box #nick_list").remove();
+
+                for ( let [key, value] of Object.entries(list)) { // list update
+                    // key = "socket.id1", value="nickname1" ~~
+                    let li = document.createElement("li");
+                    li.classList.add("item");
+                    li.id = "nick_list";
+                    li.innerHTML = `<a href="#"><i class="fa fa-user"></i><span>${value}</span></a>`;
+                    nick_list.appendChild(li);
+                }
+            })
+
+            /* 보낼 사람 선택 */
+            var nick = "";
+            $(document).on("click",".item",function(){ //list
+                nick = $(this).text();
+                document.getElementById("chat-title").innerHTML = `<span>${nick}</span><i class="fa fa-search"></i>` ;
+                console.log("select nick:", nick);
+        
+                /* 내용 비우기 */
+                if(nick == "Team chat") { // 팀 채팅
+                    $(".chat li").remove();
+                } else { // DM
+                    $(".chat").remove();
+                }
+            });
+
+            /* board 없애기 */
+            $(document).on("click",".board",function(){ // board
+                let left_container = document.getElementById("left-container");
+                left_container.remove();
+            });
+
+            /*  message 보내기 */
+            function send() {
+                let msg = document.getElementById("message").value;
+                if(msg != '') {
+                    socket.emit("send", {to: nick, msg: msg}); // msg 보내기
+                    document.getElementById("message").value = '';
+                }
+            }
+            
+            /*  message 받기 */
+            socket.on("newMessage", function(data){ // data 받았으면
+                let chat_list = document.getElementById("chat-list");
+                let chat = document.getElementById("chat");
+                let li = document.createElement("li");
+                let div = document.createElement("div");
+                div.classList.add("msg");
+
+                // \n
+                data.msg = data.msg.split('\n');
+                
+
+                let p = document.createElement("p");
+                p.textContent = data.msg; // message
+
+                if (data.nickname == nickname) { // my
+                    li.classList.add("my");
+                } else { // other
+                    let div_name = document.createElement("div");
+                    if(data.is_dm) {
+                        div_name.textContent = "(DM) " + data.nickname;
+                    } else {
+                        div_name.textContent = data.nickname;
+                    }
+                    div_name.classList.add("user");
+                    li.classList.add("other");
+                    div.appendChild(div_name);
+                }
+
+                div.appendChild(p); //p를 div 자식으로
+                li.appendChild(div);
+                chat.appendChild(li);
+                chat_list.scrollTop = chat_list.scrollHeight; // 스크롤 자동 내리기
+
+            })
+
+            /* enter key */
+            var input = document.getElementById("message");
+
+            input.addEventListener("keydown", function (event) {
+                if( event.keyCode === 13) {
+                    if(!event.shiftKey) {
+                        event.preventDefault();
+                        send();
+                    }
+                }
+            });
+
+            var board = document.getElementById("board");
+        </script>
+    </body>
+</html>
