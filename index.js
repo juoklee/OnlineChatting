@@ -26,8 +26,14 @@ app.use( "/public", express.static('public'));
 /* route */
 app.get("/", function(req, res){
     console.log("client");
+    res.sendFile( __dirname + "/views/main.html");
+});
+
+app.get("/chat", function(req, res){
+    console.log("client");
     res.sendFile( __dirname + "/views/chat.html");
 });
+
 
 
 var list = {};

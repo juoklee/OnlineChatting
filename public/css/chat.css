@@ -375,3 +375,48 @@ div {
         width: calc(100% - 110px);
     }
 }
+
+/*main*/
+.user-info {
+    display: inline-block;
+    position: absolute;
+    border-top: 1px solid #cfdae1;
+    height: calc(100% - 45px);
+    width: 100%;
+}
+.user-input {
+    display: inline-block;
+    position: absolute;
+    height: 50%;
+    width: 50%;
+    left: 25%;
+    top: 25%;
+}
+.user-info p {
+    font-size: 15px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+.user-info input[type="text"] {
+    width: 100%;
+    font-size: 15px;
+    font-weight: bold;
+}
+.user-info input[type="color"] {
+    width: 50px;
+    font-size: 15px;
+    font-weight: bold;
+}
+.go-btn {
+    background: #a0b4c0;
+    border: none;
+    font-weight: bold;
+    color: #fff;
+	border-radius: 3px;
+    height: 30px;
+    cursor: pointer;
+    outline: none;
+    width: 100%;
+    margin-top: 10px;
+}
+
