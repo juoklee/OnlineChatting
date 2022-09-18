@@ -33,7 +33,7 @@
                         <div class="my-account">
                             <div class="name">
                                 <i class="fa fa-circle-user"></i>
-                                <span id="name"></span>
+                                <span id="name"><%=name%></span>
                                 <i class="fa fa-angle-down"></i>
                                 <span class="availability">Available</span>
                             </div>
@@ -82,16 +82,9 @@
     
         <script>
             // var nickname = prompt('닉네임을 입력하세요');   
-            var nickname = "";
+            var nickname = document.getElementById("name").value;
             var socket = io.connect(); 
-
-            if(!nickname) {
-                socket.emit('info', {nickname: 'Guest'});
-            } else {
-                socket.emit('info', {nickname: nickname}); 
-            }
-            document.getElementById("name").textContent = nickname;
-
+            
             /*  입장 alert */
             socket.on("notice", function(data) {
                 let chat = document.getElementById("chat");

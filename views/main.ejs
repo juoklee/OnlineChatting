@@ -25,41 +25,40 @@
             </div>
 
             <div class="container">
-                <form action="/chat">
-                    <div class="user-info">
-                        <div class="user-input">
-                            <p>User mame</p>
-                            <input type="text" id="name" value="">
-                            <p>Choose color</p>
-                            <input type="color" id="color" value=""></br>
-                            <input type="button" onclick="send();" value="Go!" class="go-btn">
-                        </div>
+                <div class="user-info">
+                    <div class="user-input">
+                        <form action="/chat" method="POST">
+                            <span>User name</span></br>
+                            <input type="text" id="name" name="name" value="">
+                            <span>Choose color</span>
+                            <input type="color" id="color" name="color" value=""></br>
+                            <!-- <input type="button" onclick="send();" value="Go!" class="go-btn"> -->
+                            <input type="submit" value="Go!" class="go-btn">
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
         
     
         <script>
-            $(document).ready(function(){
-                var nickname = document.getElementById("name");
-
-                var socket = io.connect(); 
-
-                if(!nickname) {
-                    socket.emit('info', {nickname: 'Guest'});
-                } else {
-                    socket.emit('info', {nickname: nickname}); 
-                }
-                document.getElementById("name").textContent = nickname;
-            });
-            
             function send() {
-                
+                location.href="http://localhost:8000/chat"
             }
+            
+            $(document).ready(function(){
+                // var socket = io.connect(); 
+                // var nickname = document.getElementById("name");
+                // if(!nickname) {
+                //     socket.emit('info', {nickname: 'Guest'});
+                // } else {
+                //     socket.emit('info', {nickname: nickname}); 
+                // }
+                // document.getElementById("name").textContent = nickname;
+            });
 
             /* enter key */
-            var input = document.getElementById("message");
+            var input = document.getElementById("name");
 
             input.addEventListener("keyup", function (event) {
                 if (event.keyCode === 13) {

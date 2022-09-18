@@ -392,20 +392,26 @@ div {
     left: 25%;
     top: 25%;
 }
-.user-info p {
+.user-info span {
     font-size: 15px;
     font-weight: bold;
-    margin: 10px 0;
+    margin: 20px 0;
 }
 .user-info input[type="text"] {
     width: 100%;
+    height: 30px;
     font-size: 15px;
-    font-weight: bold;
+    background: #445166;
+    color: #fff;
+    border-radius: 3px;
+    border: none;
+    margin: 10px 0;
 }
 .user-info input[type="color"] {
     width: 50px;
     font-size: 15px;
     font-weight: bold;
+    margin: 10px 10px;
 }
 .go-btn {
     background: #a0b4c0;
@@ -417,6 +423,6 @@ div {
     cursor: pointer;
     outline: none;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 30px;
 }
 
