@@ -78,10 +78,12 @@ io.on("connection", function(socket){
 
     /* 퇴장 */
     socket.on("disconnect", function(){
-        console.log("list[socket.id].name:", list[socket.id].name);
-        io.emit("notice", list[socket.id].name + "님이 퇴장하셨습니다."); //퇴장 notice
-        delete list[socket.id]; // key,value 둘다 삭제
-        io.emit('list', list);
+        if(list != {}) {
+            console.log("list[socket.id].name:", list[socket.id].name);
+            io.emit("notice", list[socket.id].name + "님이 퇴장하셨습니다."); //퇴장 notice
+            delete list[socket.id]; // key,value 둘다 삭제
+            io.emit('list', list);
+        }
     });
 });
 

@@ -152,13 +152,7 @@
                 let div = document.createElement("div");
                 div.classList.add("msg");
 
-                // \n
-                data.msg = data.msg.split('\n');
-                
-
-                let p = document.createElement("p");
-                p.textContent = data.msg; // message
-
+                // nickname
                 if (data.nickname == nickname) { // my
                     li.classList.add("my");
                 } else { // other
@@ -173,7 +167,16 @@
                     div.appendChild(div_name);
                 }
 
-                div.appendChild(p); //p를 div 자식으로
+                // msg \n 처리
+                data.msg = data.msg.split("\n");
+                console.log("data.msg:", data.msg);
+
+                for (var msg of data.msg) {
+                    let p = document.createElement("p");
+                    p.textContent = msg;
+                    div.appendChild(p); //p를 div 자식으로
+                }
+
                 li.appendChild(div);
                 chat.appendChild(li);
                 chat_list.scrollTop = chat_list.scrollHeight; // 스크롤 자동 내리기
