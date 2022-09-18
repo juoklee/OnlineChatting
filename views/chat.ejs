@@ -31,10 +31,9 @@
                         <li class="item active"><a href="#"><i class="fa fa-users"></i><span>Team chat</span></a></li>
                         <!-- <li class="item"><a href="#"><i class="fa fa-user"></i><span>nickname1</span></a></li> -->
                         <div class="my-account">
-                            <div class="name">
+                            <div class="profile">
                                 <i class="fa fa-circle-user"></i>
-                                <span id="name"><%=name%></span>
-                                <i class="fa fa-angle-down"></i>
+                                <span class="name" id="name"><%=name%></span>
                                 <span class="availability">Available</span>
                             </div>
                         </div>
@@ -81,10 +80,13 @@
         
     
         <script>
-            // var nickname = prompt('닉네임을 입력하세요');   
-            var nickname = document.getElementById("name").value;
+            var nickname = document.getElementById("name").textContent;
+            $(".fa-circle-user").attr("style", `color:<%=color%>`);
+
             var socket = io.connect(); 
-            
+            socket.emit('info', {nickname: nickname});
+            console.log("nickname:", nickname);
+                    
             /*  입장 alert */
             socket.on("notice", function(data) {
                 let chat = document.getElementById("chat");
@@ -96,15 +98,18 @@
 
             /* 유저 list */
             socket.on('list', function(list) {
+                console.log("list:", list);
                 let nick_list = document.getElementById("nickname_box");    
                 $(".nickname_box #nick_list").remove();
 
                 for ( let [key, value] of Object.entries(list)) { // list update
                     // key = "socket.id1", value="nickname1" ~~
+                    console.log("key", key);
+                    console.log("value", value);
                     let li = document.createElement("li");
                     li.classList.add("item");
                     li.id = "nick_list";
-                    li.innerHTML = `<a href="#"><i class="fa fa-user"></i><span>${value}</span></a>`;
+                    li.innerHTML = `<a href="#"><i class="fa fa-user"></i><span>${value.name}</span></a>`;
                     nick_list.appendChild(li);
                 }
             })

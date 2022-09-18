@@ -30,9 +30,8 @@
                         <form action="/chat" method="POST">
                             <span>User name</span></br>
                             <input type="text" id="name" name="name" value="">
-                            <span>Choose color</span>
+                            <span>Choose Profile color</span>
                             <input type="color" id="color" name="color" value=""></br>
-                            <!-- <input type="button" onclick="send();" value="Go!" class="go-btn"> -->
                             <input type="submit" value="Go!" class="go-btn">
                         </form>
                     </div>
@@ -45,17 +44,6 @@
             function send() {
                 location.href="http://localhost:8000/chat"
             }
-            
-            $(document).ready(function(){
-                // var socket = io.connect(); 
-                // var nickname = document.getElementById("name");
-                // if(!nickname) {
-                //     socket.emit('info', {nickname: 'Guest'});
-                // } else {
-                //     socket.emit('info', {nickname: nickname}); 
-                // }
-                // document.getElementById("name").textContent = nickname;
-            });
 
             /* enter key */
             var input = document.getElementById("name");

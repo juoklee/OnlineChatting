@@ -111,7 +111,7 @@ div {
     display: inline-block;
     background-color: #505d71;
     width: 180px;
-    height: calc(100% - 88px);
+    height: calc(100% - 120px);
     overflow-y: scroll;
 }
 .left-container::-webkit-scrollbar {
@@ -154,26 +154,31 @@ div {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	height: 44px;
+	height: 75px;
 	padding: 8px;
 	background: #445166;
 }
-.name{
-    color: #fff;
-    font-weight: bold;
-    margin-left: 10px;
+.profile{
+    margin: 10px 10px;
     float: left;
     cursor: pointer;
 } 
-.name .availability{
+.fa-circle-user:before {
+    font-size: 16px;
+    margin-right: 5px;
+}
+.profile .name {
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+}
+.profile .availability{
     display: block;
     font-weight: normal;
     color: #8391a1;
-    margin-top: 5px;
+    margin-top: 13px;
 }
-.fa .fa-circle-user {
-    color: blanchedalmond;
-}
+
 
 /* chat */
 .chat-area{
