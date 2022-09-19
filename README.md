@@ -10,6 +10,9 @@
 ## 💬 OnlineChattingSite
 ### socket.io로 구현한 온라인 채팅 사이트
 
-## 💻 Demo
+</br>
 
-![screen-recording](https://user-images.githubusercontent.com/72849620/191047739-c7b3aede-96d2-45bb-9d27-9ec0b9a30a65.gif)
+## 💻 Demo
+<div align="center">
+<img width="70%" src="https://user-images.githubusercontent.com/72849620/191047739-c7b3aede-96d2-45bb-9d27-9ec0b9a30a65.gif"></img>
+</div>
