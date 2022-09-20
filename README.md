@@ -14,5 +14,8 @@
 
 ## 💻 Demo
 <div align="center">
-<img width="70%" src="https://user-images.githubusercontent.com/72849620/191047739-c7b3aede-96d2-45bb-9d27-9ec0b9a30a65.gif"></img>
+
+<img width="100%" src="https://user-images.githubusercontent.com/72849620/191199856-7a477edc-21c3-47a7-bc20-dee4fc228c90.gif"></img>
+<img src="https://user-images.githubusercontent.com/72849620/191199997-2c382ba1-45bd-4fcf-9d21-8699fb4982b9.gif"></img>
+
 </div>
